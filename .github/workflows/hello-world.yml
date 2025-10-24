@@ -2,10 +2,15 @@ name: Hello world
 
 on: [push]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   hello-world:
     runs-on: ubuntu-latest
     steps:
       - name: Hello world
         run: |
+          sleep 120
           echo "Hello world"
